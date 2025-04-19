@@ -45,7 +45,7 @@ const SellerLayout = () => {
           <p>Hi! Admin</p>
           <button
             onClick={logout}
-            className="border rounded-full text-sm px-4 py-1"
+            className="border rounded-full text-sm px-4 py-1 cursor-pointer"
           >
             Logout
           </button>
@@ -66,12 +66,19 @@ const SellerLayout = () => {
                                 : "hover:bg-gray-100/90 border-white"
                             }`}
             >
-              <img src={item.icon} alt="" className="w-7 h-7" />
+              <img
+                src={item.icon}
+                alt="icon"
+                className="w-9 h-7 min-w-7 object-cover"
+              />
               <p className="md:block hidden text-center">{item.name}</p>
             </NavLink>
           ))}
         </div>
-        <Outlet />
+        {/* Outlet with fallback content */}
+        <div className="flex-1 h-[95vh] bg-gray-50 p-4">
+          <Outlet />
+        </div>
       </div>
     </>
   );

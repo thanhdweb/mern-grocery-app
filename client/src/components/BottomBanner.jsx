@@ -3,7 +3,7 @@ import { assets, features } from "../assets/assets";
 
 const BottomBanner = () => {
   return (
-    <div className="relative mt-24">
+    <div className="relative min-h-[400px] md:min-h-0 md:mt-24">
       <img
         src={assets.bottom_banner_image}
         alt="banner"
