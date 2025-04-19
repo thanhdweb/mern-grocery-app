@@ -77,7 +77,7 @@ const ProductList = () => {
                   <td className="px-4 py-3">
                     <label className="relative inline-flex items-center cursor-pointer text-gray-900 gap-3">
                       <input
-                        onClick={() =>
+                        onChange={() =>
                           toggleStock(product._id, !product.inStock)
                         }
                         checked={product.inStock}

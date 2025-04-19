@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { assets } from "./../assets/assets";
 import { useAppContext } from "./../context/AppContext";
@@ -16,6 +16,9 @@ const Navbar = () => {
     getCartCount,
     axios,
   } = useAppContext();
+
+  // show/hidden thanh search
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
 
   const logout = async () => {
     try {
@@ -41,21 +44,27 @@ const Navbar = () => {
   return (
     <nav className="flex items-center justify-between px-4 md:px-14 lg:px-14 py-4 border-b border-gray-300 bg-white relative transition-all z-40">
       <NavLink to={"/"} onClick={() => setOpen(false)}>
-        <img className="h-9" src={assets.logo} alt="logo" />
+        <img
+          className="h-9 w-35 md:w-40 lg:w-44"
+          src={assets.logo}
+          alt="logo"
+        />
       </NavLink>
 
       {/* Desktop Menu */}
-      <div className="hidden sm:flex items-center gap-8">
+      <div className="hidden sm:flex items-center sm:gap-5 md:gap-6 xl:gap-8">
         <NavLink to={"/"}>Home</NavLink>
         <NavLink to={"/products"}>All Product</NavLink>
-        <NavLink to={"/"}>Contact</NavLink>
 
-        <div className="hidden lg:flex items-center text-sm gap-2 border border-gray-300 px-3 rounded-full">
+        <div
+          className="flex items-center text-sm gap-2 border border-gray-300 px-3 rounded-full 
+                sm:w-40 md:w-52 lg:w-64 xl:w-80 transition-all duration-200"
+        >
           <input
             onChange={(e) => setSearchQuery(e.target.value)}
             className="py-1.5 w-full bg-transparent outline-none placeholder-gray-500"
             type="text"
-            placeholder="Search products"
+            placeholder="Search..."
           />
           <img src={assets.search_icon} alt="search" className="w-4 h-4" />
         </div>
@@ -97,12 +106,43 @@ const Navbar = () => {
               >
                 Logout
               </li>
+              <li className="p-1.5 pl-3 hover:bg-primary/10 cursor-pointer">
+                <NavLink to="/seller" className="block w-full h-full">
+                  Dashboard seller
+                </NavLink>
+              </li>
             </ul>
           </div>
         )}
       </div>
 
-      <div className="flex items-center gap-6 sm:hidden">
+      {/* Mobile */}
+      <div className="flex items-center gap-4 sm:hidden relative">
+        <div
+          className={`flex items-center border border-gray-300 rounded-full bg-white transition-all duration-400 ${
+            showMobileSearch
+              ? "w-30 sm:50 h-8 pl-2 pr-1 py-1.5"
+              : "w-8 h-8 pl-2 justify-center"
+          } overflow-hidden`}
+        >
+          <button
+            onClick={() => setShowMobileSearch(!showMobileSearch)}
+            className="flex-shrink-0"
+          >
+            <img src={assets.search_icon} alt="search" className="w-4 h-4" />
+          </button>
+
+          <input
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className={`bg-transparent outline-none text-sm placeholder-gray-500 ml-2 transition-all duration-200 ${
+              showMobileSearch ? "w-full" : "w-0"
+            }`}
+            type="text"
+            placeholder="Search"
+          />
+        </div>
+
+        {/* Cart */}
         <div
           onClick={() => navigate("/cart")}
           className="relative cursor-pointer"
@@ -117,6 +157,7 @@ const Navbar = () => {
           </button>
         </div>
 
+        {/* Menu Icon */}
         <button
           onClick={() => (open ? setOpen(false) : setOpen(true))}
           aria-label="Menu"
@@ -141,12 +182,12 @@ const Navbar = () => {
             All Product
           </NavLink>
           {user && (
-            <NavLink to={"/products"} onClick={() => setOpen(false)}>
+            <NavLink to={"/my-orders"} onClick={() => setOpen(false)}>
               My Orders
             </NavLink>
           )}
-          <NavLink to={"/"} onClick={() => setOpen(false)}>
-            Contact
+          <NavLink to={"/seller"} onClick={() => setOpen(false)}>
+            Dashboard seller
           </NavLink>
 
           {!user ? (

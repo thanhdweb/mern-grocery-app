@@ -38,7 +38,7 @@ export const AppContextProvider = ({ children }) => {
     }
   };
 
-  // Fetch User Auth Status, User Data and Cart Items
+  // Fetch User Auth Status, User Data and Cart Items (Lấy trạng thái xác thực của người dùng, dữ liệu người dùng và mục giỏ hàng)
   const fetchUser = async () => {
     try {
       const { data } = await axios.get("/api/user/is-auth");
@@ -100,7 +100,7 @@ export const AppContextProvider = ({ children }) => {
     setCartItems(cartData);
   };
 
-  // Get Cart item count
+  // Get Cart item count (Lấy số lượng mặt hàng trong giỏ hàng)
   const getCartCount = () => {
     let totalCount = 0;
     for (const item in cartItems) {
@@ -109,7 +109,7 @@ export const AppContextProvider = ({ children }) => {
     return totalCount;
   };
 
-  //Get Cart Total Amount
+  //Get Cart Total Amount (Lấy Tổng số tiền trong giỏ hàng)
   const getCartAmount = () => {
     let totalAmount = 0;
     for (const items in cartItems) {
